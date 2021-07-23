@@ -1,0 +1,11 @@
+import express from 'express';
+import {signup,signin,signout} from '../controller/auth.js';
+import {userSignupValidator} from '../validation/index.js';
+import { userByID } from '../controller/user.js';
+const router=express.Router();
+;
+router.post('/signup',userSignupValidator,signup);
+router.post('/signin',signin);
+router.get('/signout',signout);
+router.param('userId',userByID);
+export default router;

@@ -7,7 +7,7 @@ const getPost=async(req,res)=>{
 }
 
 const createPost=async(req,res)=>{
- const post= new Post(req.body);
+ const post=new Post(req.body);
  await post.save();
  res.json({
      post

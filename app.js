@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import router from './router/post.js';
+import postRoutes from './router/post.js';
+import authRoutes from './router/auth.js';
+import cookieParser from 'cookie-parser';
 import expressValidator from 'express-validator';
 dotenv.config();
 const app=express();
@@ -14,8 +16,17 @@ const app=express();
  });
  app.use(express.json());
  app.use(express.urlencoded({ extended: true }));
+ app.use(cookieParser());
 app.use(expressValidator());
-app.use('/',router);
+app.use('/',postRoutes);
+app.use('/',authRoutes);
+
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({error:"unauthorised..."});
+  }
+});
+
 const port=3000;
 app.listen(port,()=>{
     console.log(`listening from the port ${port}`);
