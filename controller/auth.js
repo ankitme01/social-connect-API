@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import expressJwt from 'express-jwt';
 dotenv.config();
-const signup=async(req,res)=>{
+export const signup=async(req,res)=>{
   const userExits=await User.findOne({email:req.body.email});
   if(userExits)
   {
@@ -15,7 +15,7 @@ const signup=async(req,res)=>{
   await user.save();
   res.json({message:"signup success! please login."});
 }
-const signin=(req,res)=>{
+export const signin=(req,res)=>{
   const {email,password}=req.body;
    User.findOne({email},(err,user)=>{
      if(err||!user)
@@ -36,13 +36,12 @@ const signin=(req,res)=>{
      return res.json({token,user:{_id,name,email}});
    });
 };
-const signout=(req,res)=>{
+export const signout=(req,res)=>{
   res.clearCookie("t");
   return res.json({message:"signout success!"});
 }
-const requireSignin=expressJwt({
+export const requireSignin=expressJwt({
   secret:process.env.JWT_SECRET,
   algorithms:["HS256"],
   userProperty:"auth",
 });
-export {signup,signin,signout,requireSignin};
