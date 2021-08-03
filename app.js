@@ -11,7 +11,7 @@ import cors from 'cors';
 dotenv.config();
 const app=express();
 
- mongoose.connect(process.env.dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
+ mongoose.connect(process.env.dbUrl, {useNewUrlParser: true, useUnifiedTopology: true,useFindAndModify: false});
  const db = mongoose.connection;
  db.on('error', console.error.bind(console, 'connection error:'));
  db.once('open', function () {
