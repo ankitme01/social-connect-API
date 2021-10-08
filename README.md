@@ -1,6 +1,6 @@
 # social-connect-API
-##Docs
-    /: API docs
+## Docs
+   /: API docs
    /signup: signup
    /signin: signin,
    /signout: signout
